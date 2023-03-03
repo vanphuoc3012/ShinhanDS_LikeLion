@@ -1,9 +1,9 @@
 package com.example.businesslogicserver.authentication.filter;
 
 import com.example.businesslogicserver.authentication.UsernamePasswordAuthentication;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,16 +32,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         SecretKey key = Keys.hmacShaKeyFor(signKey.getBytes(StandardCharsets.UTF_8));
 
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(jwt)
-                .getBody();
-        String username = String.valueOf(claims.get("username"));
-        GrantedAuthority a = new SimpleGrantedAuthority("user");
-        var authentication = new UsernamePasswordAuthentication(username, null, List.of(a));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        filterChain.doFilter(request, response);
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(jwt)
+                    .getBody();
+            String username = String.valueOf(claims.get("username"));
+            GrantedAuthority a = new SimpleGrantedAuthority("user");
+            var authentication = new UsernamePasswordAuthentication(username, null, List.of(a));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            filterChain.doFilter(request, response);
+        } catch (MalformedJwtException | ExpiredJwtException |
+                 UnsupportedJwtException | IllegalArgumentException |
+                 SignatureException e) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }
     }
 
     @Override

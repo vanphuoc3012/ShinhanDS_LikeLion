@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/JwtProject/BusinessLogicServer/BusinessLogicServer.iml" filepath="$PROJECT_DIR$/JwtProject/BusinessLogicServer/BusinessLogicServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JwtProject/ImplAuthenticationServer/ImplAuthenticationServer.iml" filepath="$PROJECT_DIR$/JwtProject/ImplAuthenticationServer/ImplAuthenticationServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/PracticeProject3/PracticeProject3.iml" filepath="$PROJECT_DIR$/PracticeProject3/PracticeProject3.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/shinhands.iml" filepath="$PROJECT_DIR$/.idea/shinhands.iml" />
       <module fileurl="file://$PROJECT_DIR$/PracticeProject2/spring.iml" filepath="$PROJECT_DIR$/PracticeProject2/spring.iml" />

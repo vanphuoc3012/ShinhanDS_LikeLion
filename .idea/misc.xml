@@ -5,6 +5,8 @@
       <list>
         <option value="$PROJECT_DIR$/PracticeProject2/pom.xml" />
         <option value="$PROJECT_DIR$/PracticeProject3/pom.xml" />
+        <option value="$PROJECT_DIR$/JwtProject/BusinessLogicServer/pom.xml" />
+        <option value="$PROJECT_DIR$/JwtProject/ImplAuthenticationServer/pom.xml" />
       </list>
     </option>
   </component>

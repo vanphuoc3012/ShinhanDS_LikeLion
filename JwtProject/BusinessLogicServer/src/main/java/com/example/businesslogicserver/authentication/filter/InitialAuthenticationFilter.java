@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.Map;
 
 @Component
@@ -38,6 +39,8 @@ public class InitialAuthenticationFilter extends OncePerRequestFilter {
 
     @Value("${jwt.sign.key}")
     private String signKey;
+
+    private final long JWT_EXPIRATION = 7 * 24 * 60 * 60 * 100; // 1 tuan
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String username = request.getHeader("username");
@@ -46,8 +49,11 @@ public class InitialAuthenticationFilter extends OncePerRequestFilter {
 
         AuthenticationManager manager = getManager();
 
+        Date now = new Date();
+        Date expiredDate = new Date(now.getTime() + JWT_EXPIRATION);
+
         if(code == null) {
-            Authentication a = new UsernamePasswordAuthentication(username, password);
+            Authentication a = new UsernamePasswordAuthentication(username, password); //chưa xác thực
             manager.authenticate(a);
         } else {
             Authentication a = new OtpAuthentication(username, code);
@@ -57,6 +63,8 @@ public class InitialAuthenticationFilter extends OncePerRequestFilter {
 
             String jwt = Jwts.builder()
                     .setClaims(Map.of("username", username))
+                    .setIssuedAt(new Date())
+                    .setExpiration(expiredDate)
                     .signWith(key)
                     .compact();
 

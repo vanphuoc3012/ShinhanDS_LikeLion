@@ -9,15 +9,21 @@
         <outputRelativeToContentRoot value="true" />
         <module name="spring" />
         <module name="PracticeProject3" />
+        <module name="ImplAuthenticationServer" />
+        <module name="BusinessLogicServer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="BusinessLogicServer" target="11" />
+      <module name="ImplAuthenticationServer" target="11" />
       <module name="PracticeProject3" target="11" />
       <module name="spring" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="BusinessLogicServer" options="-parameters" />
+      <module name="ImplAuthenticationServer" options="-parameters" />
       <module name="PracticeProject3" options="-parameters" />
       <module name="spring" options="-parameters" />
     </option>
