@@ -73,4 +73,13 @@ public class KafkaService {
 
 
 ### Task 3: Dynamically create/delete Kafka topic
+```agsl
+public void createTopic(String topic) {
+        adminClient.createTopics(List.of(TopicBuilder.name(topic).build()));
+    }
+
+    public void deleteTopic(String topic) {
+        adminClient.deleteTopics(List.of(topic));
+    }
+```
 ![img_6.png](images%2Fimg_6.png)
