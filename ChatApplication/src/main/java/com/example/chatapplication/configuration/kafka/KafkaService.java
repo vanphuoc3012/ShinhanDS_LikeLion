@@ -3,19 +3,24 @@ package com.example.chatapplication.configuration.kafka;
 import com.example.chatapplication.chatroom.model.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.kafka.clients.admin.AdminClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
+import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.MessageListener;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
-public class KafkaListenerService {
-
+public class KafkaService {
+    @Autowired
+    private AdminClient adminClient;
     @Autowired
     ConcurrentKafkaListenerContainerFactory<String, Message> listenerContainerFactory;
     @Autowired
@@ -36,5 +41,13 @@ public class KafkaListenerService {
         });
         listenerContainer = new ConcurrentMessageListenerContainer<>(consumerFactory, containerProperties);
         listenerContainer.start();
+    }
+
+    public void createTopic(String topic) {
+        adminClient.createTopics(List.of(TopicBuilder.name(topic).build()));
+    }
+
+    public void deleteTopic(String topic) {
+        adminClient.deleteTopics(List.of(topic));
     }
 }

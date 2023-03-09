@@ -16,15 +16,13 @@ import java.util.List;
 @RestController
 public class KafkaController {
     @Autowired
-    private KafkaListenerService kafkaListenerService;
-    @Autowired
-    private AdminClient adminClient;
+    private KafkaService kafkaService;
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/kafka")
     public ResponseEntity<?> changeKafkaTopic(@RequestParam String topic) {
         try {
-            kafkaListenerService.changeTopic(topic);
+            kafkaService.changeTopic(topic);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -34,14 +32,14 @@ public class KafkaController {
     @Secured("ROLE_ADMIN")
     @GetMapping("/kafka/create-topic")
     public ResponseEntity<?> createTopic(@RequestParam String topic) {
-        adminClient.createTopics(List.of(TopicBuilder.name(topic).build()));
+        kafkaService.createTopic(topic);
         return ResponseEntity.ok("Successfully create topic: " + topic);
     }
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/kafka/delete-topic")
     public ResponseEntity<?> deleteTopic(@RequestParam String topic) {
-        adminClient.deleteTopics(List.of(topic));
+        kafkaService.deleteTopic(topic);
         return ResponseEntity.ok("Successfully delete topic: " + topic);
     }
 }
