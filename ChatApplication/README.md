@@ -8,9 +8,9 @@ Overview:
 - Oracle Database: store user information
 - Websocket: (<a href="">See here</a>)
 - RabbitMQ: STOMP broker, keep track of subscriptions and broadcasts messages to subscribed users. (Alternation for default in-memory STOMP broker of Spring) (<a href="src%2Fmain%2Fjava%2Fcom%2Fexample%2Fchatapplication%2Fconfiguration%2FWebSocketConfiguration.java">See here</a>)
-- Redis: in-memory database, use for store WebSocket Session, Chat Room information and messages. (<a href="">See here</a>)
-- Apache Zookeeper, Kafka ()
-- Apache Kafka: (<a href="">See here</a>)
+- Redis: in-memory database, use for store WebSocket Session, Chat Room information and messages. (<a href="src%2Fmain%2Fjava%2Fcom%2Fexample%2Fchatapplication%2Fchatroom%2Fservice%2Fimplement">See here</a>)
+- Apache Zookeeper
+- Apache Kafka: (<a href="src%2Fmain%2Fjava%2Fcom%2Fexample%2Fchatapplication%2Fconfiguration%2Fkafka">See here</a>)
 
 #### Result
 - Chat Application with multiple room (multiple WebSocket channel):
